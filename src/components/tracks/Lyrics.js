@@ -22,7 +22,7 @@ const Lyrics = (props) => {
         setTrack(res.data.message.body.track);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [props.match.params.id]);
 
   return (
     <div>
