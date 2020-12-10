@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { searchForTracks } from "../../actions/TrackActions";
+import { searchForLyrics, clearTracks } from "../../actions/TrackActions";
+import { withRouter } from "react-router-dom";
 
-const Search = () => {
+const Search = ({ history }) => {
   const [trackTitle, setTrackTitle] = useState("");
   const dispatch = useDispatch();
 
@@ -12,8 +13,9 @@ const Search = () => {
 
   const findTrack = (e) => {
     e.preventDefault();
-    dispatch(searchForTracks(trackTitle));
     setTrackTitle("");
+    dispatch(searchForLyrics(trackTitle));
+    history.push(`/results`);
   };
 
   return (
@@ -25,18 +27,18 @@ const Search = () => {
           <input
             type="text"
             className="form-control form-control-lg"
-            placeholder="Song title..."
+            placeholder="Song title or artist name..."
             name="trackTitle"
             value={trackTitle}
             onChange={handleChange}
           />
         </div>
         <button className="btn btn-primary btn-lg btn-block mb-3" type="submit">
-          Get Lyrics
+          SEARCH
         </button>
       </form>
     </div>
   );
 };
 
-export default Search;
+export default withRouter(Search);

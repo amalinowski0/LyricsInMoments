@@ -1,21 +1,32 @@
-import { FETCH_TRACKS, SEARCH_TRACK } from "../actions/Types";
+import { FETCH_TRACKS, SEARCH_TRACK, CLEAR_TRACKS } from "../actions/Types";
 
-const initialState = {
-  items: [],
+let initialState = {
+  heading: "",
+  tracks: [],
+  artists: [],
 };
 
-export default function (state = initialState, action) {
+export default function TrackReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_TRACKS: {
       return {
         ...state,
-        items: action.payload,
+        tracks: action.payload,
+        heading: action.heading,
       };
     }
     case SEARCH_TRACK: {
       return {
         ...state,
-        items: action.payload,
+        tracks: action.payload.track_list,
+        artists: action.payload.artist_list,
+        heading: action.heading,
+      };
+    }
+    case CLEAR_TRACKS: {
+      return {
+        ...state,
+        tracks: [],
       };
     }
     default: {

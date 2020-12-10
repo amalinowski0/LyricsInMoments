@@ -24,46 +24,74 @@ const Lyrics = (props) => {
       .catch((err) => console.log(err));
   }, [props.match.params.id]);
 
-  return (
-    <div>
-      {track === undefined ||
-      lyrics === undefined ||
-      Object.keys(track).length === 0 ||
-      Object.keys(lyrics).length === 0 ? (
-        <Loader />
-      ) : (
-        <React.Fragment>
-          <Link to="/" className="btn btn-dark btn-sm mb-4">
-            Return
-          </Link>
-          <div className="card">
-            <h5 className="card-header">
-              {track.track_name} by{" "}
-              <span className="text-secondary">{track.artist_name}</span>
-            </h5>
-            <div className="card-body">
-              <p className="card-text">{lyrics.lyrics_body}</p>
-            </div>
-            <ul className="list-group mt-3">
-              <li className="list-group-item">
-                <strong>Album:ID</strong>: {track.album_id}
-              </li>
-              <li className="list-group-item">
-                <strong>Genre</strong>:{" "}
-                {
-                  track.primary_genres.music_genre_list[0].music_genre
-                    .music_genre_name
-                }
-              </li>
-              <li className="list-group-item">
-                <strong>Explicit</strong>: {track.explicit === 0 ? "No" : "Yes"}
-              </li>
-            </ul>
+  if (track === undefined || Object.keys(track).length === 0) {
+    return <Loader />;
+  } else if (track.has_lyrics === 0) {
+    return (
+      <>
+        <Link to="/" className="btn btn-dark btn-sm mb-4">
+          HOME
+        </Link>
+        <div className="card">
+          <h5 className="card-header">
+            {track.track_name} by{" "}
+            <span className="text-secondary">{track.artist_name}</span>
+          </h5>
+          <div className="card-body">
+            <p className="card-text">We don't have lyrics for this track.</p>
           </div>
-        </React.Fragment>
-      )}
-    </div>
-  );
+          <ul className="list-group mt-3">
+            <li className="list-group-item">
+              <strong>Album:ID</strong>: {track.album_id}
+            </li>
+            <li className="list-group-item">
+              <strong>Genre</strong>:{" "}
+              {track.primary_genres.music_genre_list[0] !== undefined
+                ? track.primary_genres.music_genre_list[0].music_genre
+                    .music_genre_name
+                : "---"}
+            </li>
+            <li className="list-group-item">
+              <strong>Explicit</strong>: {track.explicit === 0 ? "No" : "Yes"}
+            </li>
+          </ul>
+        </div>
+      </>
+    );
+  } else if (lyrics === undefined || Object.keys(lyrics).length === 0) {
+    return <Loader />;
+  } else
+    return (
+      <>
+        <Link to="/" className="btn btn-dark btn-sm mb-4">
+          HOME
+        </Link>
+        <div className="card">
+          <h5 className="card-header">
+            {track.track_name} by{" "}
+            <span className="text-secondary">{track.artist_name}</span>
+          </h5>
+          <div className="card-body">
+            <p className="card-text">{lyrics.lyrics_body}</p>
+          </div>
+          <ul className="list-group mt-3">
+            <li className="list-group-item">
+              <strong>Album:ID</strong>: {track.album_id}
+            </li>
+            <li className="list-group-item">
+              <strong>Genre</strong>:{" "}
+              {track.primary_genres.music_genre_list[0] !== undefined
+                ? track.primary_genres.music_genre_list[0].music_genre
+                    .music_genre_name
+                : "-"}
+            </li>
+            <li className="list-group-item">
+              <strong>Explicit</strong>: {track.explicit === 0 ? "No" : "Yes"}
+            </li>
+          </ul>
+        </div>
+      </>
+    );
 };
 
 export default Lyrics;
