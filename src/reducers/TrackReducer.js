@@ -1,18 +1,18 @@
-import { FETCH_TRACKS, SEARCH_TRACK, CLEAR_TRACKS } from "../actions/Types";
+import { FETCH_TOPTRACKS, SEARCH_TRACK, CLEAR_STATE } from "../actions/Types";
 
 let initialState = {
-  heading: "",
+  topTracks: [],
   tracks: [],
   artists: [],
+  query: "",
 };
 
 export default function TrackReducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_TRACKS: {
+    case FETCH_TOPTRACKS: {
       return {
         ...state,
-        tracks: action.payload,
-        heading: action.heading,
+        topTracks: action.payload,
       };
     }
     case SEARCH_TRACK: {
@@ -20,13 +20,15 @@ export default function TrackReducer(state = initialState, action) {
         ...state,
         tracks: action.payload.track_list,
         artists: action.payload.artist_list,
-        heading: action.heading,
+        query: action.payload.query,
       };
     }
-    case CLEAR_TRACKS: {
+    case CLEAR_STATE: {
       return {
         ...state,
         tracks: [],
+        artists: [],
+        query: "",
       };
     }
     default: {

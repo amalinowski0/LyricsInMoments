@@ -1,3 +1,3 @@
-export const FETCH_TRACKS = "FETCH_TRACKS";
+export const FETCH_TOPTRACKS = "FETCH_TOPTRACKS";
 export const SEARCH_TRACK = "SEARCH_TRACK";
-export const CLEAR_TRACKS = "CLEAR_TRACKS";
+export const CLEAR_STATE = "CLEAR_STATE";

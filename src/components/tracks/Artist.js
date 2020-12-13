@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "../layout/Loader";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-export const Artist = (props) => {
+const Artist = (props) => {
   const [artist, setArtist] = useState({});
   const [albums, setAlbums] = useState([]);
 
@@ -24,23 +24,42 @@ export const Artist = (props) => {
       .catch((err) => console.log(err));
   }, [props.match.params.id]);
 
-  const GetAlbums = (props) => {
-    const { albums } = props;
+  const GetDiscography = () => {
     if (albums === undefined || albums.length === 0) {
       return <p>This artist has no albums known to us.</p>;
     } else {
       return albums.map((item) => (
         <>
-          <li className="list-group-item">
-            <strong>{item.album.album_name}</strong>
-            {/* <Link
-              to={`/artist/album/${item.album.album_id}`}
-              className="btn btn-dark btn-block mt-auto"
-            >
-              {" "}
-              View Album
-            </Link> */}
-          </li>
+          <div key={item.album.album_id} className={`discography-list-row`}>
+            <ul className="list-group list-group-flush">
+              <li className="album-name">
+                <strong>{item.album.album_name}</strong>
+              </li>
+              <li className="list-group-item">
+                <strong>Genre</strong>:{" "}
+                {item.album.primary_genres.music_genre_list.length > 0
+                  ? item.album.primary_genres.music_genre_list.map(
+                      (item) => `${item.music_genre.music_genre_name} `
+                    )
+                  : "--"}
+              </li>
+              <li className="list-group-item">
+                <strong>Release date</strong>: {item.album.album_release_date}
+              </li>
+            </ul>
+            <div className="row mt-3">
+              <Link
+                to={{
+                  pathname: `/artist/${item.album.artist_id}/album/${item.album.album_id}`,
+                  state: { item },
+                }}
+                className="btn btn-dark mt-auto ml-auto mr-auto w-50"
+              >
+                {" "}
+                View Album
+              </Link>
+            </div>
+          </div>
         </>
       ));
     }
@@ -56,19 +75,30 @@ export const Artist = (props) => {
   } else {
     return (
       <>
-        <Link to="/" className="btn btn-dark btn-sm mb-4">
+        <button
+          className="btn btn-dark btn-sm mb-4"
+          onClick={props.history.goBack}
+        >
+          RETURN
+        </button>
+        <Link to="/" className="btn btn-dark btn-sm mb-4 ml-3">
           HOME
         </Link>
-        <h3>
-          <strong>{artist.artist_name}</strong>
-        </h3>
-        <div className="card">
-          <h5 className="card-header">DISCOGRAPHY </h5>
-          <ul className="list-group">
-            <GetAlbums albums={albums} />
-          </ul>
+        <div className="row">
+          <h2>
+            <strong>{artist.artist_name}</strong>
+          </h2>
+          <div className="col-md-10 mb-3 mt-5">
+            <div className="card shadow-sm">
+              <h4 className="card-header">DISCOGRAPHY </h4>
+              <div className="discography-list">
+                <GetDiscography />
+              </div>
+            </div>
+          </div>
         </div>
       </>
     );
   }
 };
+export default withRouter(Artist);

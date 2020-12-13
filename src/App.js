@@ -6,7 +6,7 @@ import "./App.css";
 import Navbar from "./components/layout/Navbar";
 import Index from "./components/layout/Index";
 import Lyrics from "./components/tracks/Lyrics";
-import { Artist } from "./components/tracks/Artist";
+import Artist from "./components/tracks/Artist";
 import Album from "./components/tracks/Album";
 import SearchResults from "./components/tracks/SearchResults";
 
@@ -21,9 +21,16 @@ const App = () => {
           <div className="container">
             <Switch>
               <Route exact path="/" component={Index} />
-              <Route exact path="/lyrics/track/:id" component={Lyrics} />
+              <Route
+                exact
+                path={[
+                  "/lyrics/track/:id",
+                  "/artist/:id/album/:id/lyrics/track/:id",
+                ]}
+                component={Lyrics}
+              />
               <Route exact path="/artist/:id" component={Artist} />
-              <Route exact path="/artist/album/:id" component={Album} />
+              <Route exact path="/artist/:id/album/:id" component={Album} />
               <Route exact path="/results" component={SearchResults} />
             </Switch>
           </div>

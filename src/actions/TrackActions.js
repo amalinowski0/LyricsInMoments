@@ -1,4 +1,4 @@
-import { FETCH_TRACKS, SEARCH_TRACK, CLEAR_TRACKS } from "./Types";
+import { FETCH_TOPTRACKS, SEARCH_TRACK, CLEAR_STATE } from "./Types";
 import axios from "axios";
 
 export const fetchTopTracks = () => (dispatch) => {
@@ -8,9 +8,8 @@ export const fetchTopTracks = () => (dispatch) => {
     )
     .then((tracks) =>
       dispatch({
-        type: FETCH_TRACKS,
+        type: FETCH_TOPTRACKS,
         payload: tracks.data.message.body.track_list,
-        heading: "Top Tracks",
       })
     )
     .catch((err) => console.log(err));
@@ -19,12 +18,12 @@ export const fetchTopTracks = () => (dispatch) => {
 export const searchForLyrics = (trackTitle) => (dispatch) => {
   axios
     .get(
-      `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.search?q_track=${trackTitle}&page_size=5&s_track_rating=desc&apikey=${process.env.REACT_APP_MM_KEY}`
+      `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.search?q_track=${trackTitle}&page_size=10&s_track_rating=desc&apikey=${process.env.REACT_APP_MM_KEY}`
     )
     .then((tracks) => {
       axios
         .get(
-          `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/artist.search?q_artist=${trackTitle}&page_size=5&apikey=${process.env.REACT_APP_MM_KEY}`
+          `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/artist.search?q_artist=${trackTitle}&page_size=10&apikey=${process.env.REACT_APP_MM_KEY}`
         )
         .then((artists) => {
           dispatch({
@@ -32,8 +31,8 @@ export const searchForLyrics = (trackTitle) => (dispatch) => {
             payload: {
               track_list: tracks.data.message.body.track_list,
               artist_list: artists.data.message.body.artist_list,
+              query: trackTitle,
             },
-            heading: "Results",
           });
         })
         .catch((err) => console.log(err));
@@ -41,8 +40,8 @@ export const searchForLyrics = (trackTitle) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const clearTracks = () => (dispatch) => {
+export const clearState = () => (dispatch) => {
   dispatch({
-    type: CLEAR_TRACKS,
+    type: CLEAR_STATE,
   });
 };

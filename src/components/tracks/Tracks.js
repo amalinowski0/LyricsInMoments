@@ -7,20 +7,21 @@ import Track from "./Track";
 import Loader from "../layout/Loader";
 
 const Tracks = () => {
-  const trackList = useSelector((state) => state.tracks.tracks);
-  const heading = useSelector((state) => state.tracks.heading);
+  const trackList = useSelector((state) => state.tracks.topTracks);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchTopTracks());
   }, [dispatch]);
 
-  if (trackList === undefined || trackList.length === 0) {
-    //dispatch(fetchTopTracks());
+  if (trackList === undefined) {
+    return <Loader />;
+  } else if (trackList.length === 0) {
+    dispatch(fetchTopTracks());
     return <Loader />;
   } else {
     return (
       <>
-        <h1>{heading}</h1>
+        <h1>Top Tracks</h1>
         <div className="row">
           {trackList.map((item) => (
             <Track key={item.track.track_id} track={item.track} />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { searchForLyrics, clearTracks } from "../../actions/TrackActions";
+import { searchForLyrics, clearState } from "../../actions/TrackActions";
 import { withRouter } from "react-router-dom";
 
 const Search = ({ history }) => {
@@ -14,6 +14,7 @@ const Search = ({ history }) => {
   const findTrack = (e) => {
     e.preventDefault();
     setTrackTitle("");
+    dispatch(clearState());
     dispatch(searchForLyrics(trackTitle));
     history.push(`/results`);
   };

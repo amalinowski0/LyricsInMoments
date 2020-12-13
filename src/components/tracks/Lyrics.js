@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "../layout/Loader";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 const Lyrics = (props) => {
   const [track, setTrack] = useState({});
@@ -29,7 +29,13 @@ const Lyrics = (props) => {
   } else if (track.has_lyrics === 0) {
     return (
       <>
-        <Link to="/" className="btn btn-dark btn-sm mb-4">
+        <button
+          className="btn btn-dark btn-sm mb-4"
+          onClick={props.history.goBack}
+        >
+          RETURN
+        </button>
+        <Link to="/" className="btn btn-dark btn-sm mb-4 ml-3">
           HOME
         </Link>
         <div className="card">
@@ -63,7 +69,13 @@ const Lyrics = (props) => {
   } else
     return (
       <>
-        <Link to="/" className="btn btn-dark btn-sm mb-4">
+        <button
+          className="btn btn-dark btn-sm mb-4"
+          onClick={props.history.goBack}
+        >
+          RETURN
+        </button>
+        <Link to="/" className="btn btn-dark btn-sm mb-4 ml-3">
           HOME
         </Link>
         <div className="card">
@@ -94,4 +106,4 @@ const Lyrics = (props) => {
     );
 };
 
-export default Lyrics;
+export default withRouter(Lyrics);
