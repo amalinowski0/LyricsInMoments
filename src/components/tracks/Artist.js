@@ -29,38 +29,36 @@ const Artist = (props) => {
       return <p>This artist has no albums known to us.</p>;
     } else {
       return albums.map((item) => (
-        <>
-          <div key={item.album.album_id} className={`discography-list-row`}>
-            <ul className="list-group list-group-flush">
-              <li className="album-name">
-                <strong>{item.album.album_name}</strong>
-              </li>
-              <li className="list-group-item">
-                <strong>Genre</strong>:{" "}
-                {item.album.primary_genres.music_genre_list.length > 0
-                  ? item.album.primary_genres.music_genre_list.map(
-                      (item) => `${item.music_genre.music_genre_name} `
-                    )
-                  : "--"}
-              </li>
-              <li className="list-group-item">
-                <strong>Release date</strong>: {item.album.album_release_date}
-              </li>
-            </ul>
-            <div className="row mt-3">
-              <Link
-                to={{
-                  pathname: `/artist/${item.album.artist_id}/album/${item.album.album_id}`,
-                  state: { item },
-                }}
-                className="btn btn-dark mt-auto ml-auto mr-auto w-50"
-              >
-                {" "}
-                View Album
-              </Link>
-            </div>
+        <div key={item.album.album_id} className={`discography-list-row`}>
+          <ul className="list-group list-group-flush">
+            <li className="album-name">
+              <strong>{item.album.album_name}</strong>
+            </li>
+            <li className="list-group-item">
+              <strong>Genre</strong>:{" "}
+              {item.album.primary_genres.music_genre_list.length > 0
+                ? item.album.primary_genres.music_genre_list.map(
+                    (item) => `${item.music_genre.music_genre_name} `
+                  )
+                : "--"}
+            </li>
+            <li className="list-group-item">
+              <strong>Release date</strong>: {item.album.album_release_date}
+            </li>
+          </ul>
+          <div className="row mt-3">
+            <Link
+              to={{
+                pathname: `/artist/${item.album.artist_id}/album/${item.album.album_id}`,
+                state: { item },
+              }}
+              className="btn btn-dark mt-auto ml-auto mr-auto w-50"
+            >
+              {" "}
+              View Album
+            </Link>
           </div>
-        </>
+        </div>
       ));
     }
   };

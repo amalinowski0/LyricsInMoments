@@ -18,12 +18,12 @@ export const fetchTopTracks = () => (dispatch) => {
 export const searchForLyrics = (trackTitle) => (dispatch) => {
   axios
     .get(
-      `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.search?q_track=${trackTitle}&page_size=10&s_track_rating=desc&apikey=${process.env.REACT_APP_MM_KEY}`
+      `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.search?q_track=${trackTitle}&page_size=100&s_track_rating=desc&apikey=${process.env.REACT_APP_MM_KEY}`
     )
     .then((tracks) => {
       axios
         .get(
-          `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/artist.search?q_artist=${trackTitle}&page_size=10&apikey=${process.env.REACT_APP_MM_KEY}`
+          `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/artist.search?q_artist=${trackTitle}&page_size=100&apikey=${process.env.REACT_APP_MM_KEY}`
         )
         .then((artists) => {
           dispatch({

@@ -8,6 +8,8 @@ import Index from "./components/layout/Index";
 import Lyrics from "./components/tracks/Lyrics";
 import Artist from "./components/tracks/Artist";
 import Album from "./components/tracks/Album";
+import MoreArtists from "./components/tracks/MoreArtists";
+import MoreTracks from "./components/tracks/MoreTracks";
 import SearchResults from "./components/tracks/SearchResults";
 
 import store from "./store";
@@ -32,6 +34,8 @@ const App = () => {
               <Route exact path="/artist/:id" component={Artist} />
               <Route exact path="/artist/:id/album/:id" component={Album} />
               <Route exact path="/results" component={SearchResults} />
+              <Route exact path="/more_artists" component={MoreArtists} />
+              <Route exact path="/more_tracks" component={MoreTracks} />
             </Switch>
           </div>
         </React.Fragment>

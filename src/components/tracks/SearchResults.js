@@ -12,18 +12,16 @@ const SearchResults = (props) => {
     return tracks.map(
       (item, index) =>
         index < 5 && (
-          <>
-            <li key={index} className="list-group-item">
-              <strong>{item.track.track_name}</strong>
-              <Link
-                to={`lyrics/track/${item.track.track_id}`}
-                className="btn btn-dark btn-block mt-auto"
-              >
-                {" "}
-                View Lyrics
-              </Link>
-            </li>
-          </>
+          <li key={index} className="list-group-item">
+            <strong>{item.track.track_name}</strong>
+            <Link
+              to={`lyrics/track/${item.track.track_id}`}
+              className="btn btn-dark btn-block mt-auto"
+            >
+              {" "}
+              View Lyrics
+            </Link>
+          </li>
         )
     );
   };
@@ -33,18 +31,16 @@ const SearchResults = (props) => {
     return artists.map(
       (item, index) =>
         index < 5 && (
-          <>
-            <li key={index} className="list-group-item">
-              <strong>{item.artist.artist_name}</strong>
-              <Link
-                to={`artist/${item.artist.artist_id}`}
-                className="btn btn-dark btn-block mt-auto"
-              >
-                {" "}
-                View Artist
-              </Link>
-            </li>
-          </>
+          <li key={index} className="list-group-item">
+            <strong>{item.artist.artist_name}</strong>
+            <Link
+              to={`artist/${item.artist.artist_id}`}
+              className="btn btn-dark btn-block mt-auto"
+            >
+              {" "}
+              View Artist
+            </Link>
+          </li>
         )
     );
   };
@@ -62,7 +58,7 @@ const SearchResults = (props) => {
       </Link>
       <h1>Search Results</h1>
       <div className="row">
-        <div className="col-md-6 mb-3">
+        <div className="col-md-6">
           <div className="card">
             <h5 className="card-header">Tracks Found:</h5>
             {trackList === undefined ? (
@@ -77,7 +73,11 @@ const SearchResults = (props) => {
               </ul>
             )}
           </div>
-          {trackList.length > 5 && <p>to be button for more...</p>}
+          {trackList.length > 5 && (
+            <Link to="/more_tracks" className="text-dark d-inline-block mt-3">
+              <h4>Click here for more tracks...</h4>
+            </Link>
+          )}
         </div>
         <div className="col-md-6 mb-3">
           <div className="card">
@@ -94,7 +94,11 @@ const SearchResults = (props) => {
               </ul>
             )}
           </div>
-          {artistList.length > 5 && <p>to be button for more...</p>}
+          {artistList.length > 5 && (
+            <Link to="/more_artists" className="text-dark d-inline-block mt-3">
+              <h4>Click here for more artists...</h4>
+            </Link>
+          )}
         </div>
       </div>
     </>

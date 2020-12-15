@@ -22,6 +22,10 @@ const Lyrics = (props) => {
         setTrack(res.data.message.body.track);
       })
       .catch((err) => console.log(err));
+    return () => {
+      setLyrics({});
+      setTrack({});
+    };
   }, [props.match.params.id]);
 
   if (track === undefined || Object.keys(track).length === 0) {
@@ -41,7 +45,11 @@ const Lyrics = (props) => {
         <div className="card">
           <h5 className="card-header">
             {track.track_name} by{" "}
-            <span className="text-secondary">{track.artist_name}</span>
+            <span className="text-secondary">
+              <Link className="btn" to={`/artist/${track.artist_id}`}>
+                {track.artist_name}
+              </Link>
+            </span>
           </h5>
           <div className="card-body">
             <p className="card-text">We don't have lyrics for this track.</p>
@@ -81,7 +89,9 @@ const Lyrics = (props) => {
         <div className="card">
           <h5 className="card-header">
             {track.track_name} by{" "}
-            <span className="text-secondary">{track.artist_name}</span>
+            <span className="text-secondary">
+              <Link to={`/artist/${track.artist_id}`}>{track.artist_name}</Link>
+            </span>
           </h5>
           <div className="card-body">
             <p className="card-text">{lyrics.lyrics_body}</p>
