@@ -22,6 +22,10 @@ const Artist = (props) => {
         setAlbums(res.data.message.body.album_list);
       })
       .catch((err) => console.log(err));
+    return () => {
+      setArtist({});
+      setAlbums([]);
+    };
   }, [props.match.params.id]);
 
   const GetDiscography = () => {

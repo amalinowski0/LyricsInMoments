@@ -16,6 +16,9 @@ const Album = (props) => {
         setTrackList(res.data.message.body.track_list);
       })
       .catch((err) => console.log(err));
+    return () => {
+      setTrackList([]);
+    };
   }, [item.album.album_id]);
 
   const GetTrackList = () => {
